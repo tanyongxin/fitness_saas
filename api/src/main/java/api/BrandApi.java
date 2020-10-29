@@ -5,9 +5,11 @@ import api.pojo.Brand;
 
 public interface BrandApi {
 
-    int addBrand(Brand brand);
+    boolean addBrand(Brand brand);
 
     Brand findBrand(Integer id);
 
-    int updateBrand(Brand brand);
+    Brand findBrandAndIntroduce(Integer id);
+
+    boolean updateBrand(Brand brand);
 }

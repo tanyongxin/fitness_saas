@@ -1,12 +1,29 @@
 package api.pojo;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class Brand {
 
     private Integer id;
+    private Boolean isValid = true;
+
+    @NotNull
+    @NotEmpty
+    @NotBlank
     private Integer name;
     private String pic; // 品牌商标，多个照片用空格隔开
     private String introduce; // 富文本中的内容
 
+
+    public Boolean getValid() {
+        return isValid;
+    }
+
+    public void setValid(Boolean valid) {
+        isValid = valid;
+    }
 
     public String getPic() {
         return pic;

@@ -2,27 +2,59 @@ package brand.impl;
 
 import api.BrandApi;
 import api.pojo.Brand;
+import api.pojo.BrandIntroduce;
+import brand.dao.BrandIntroduceMapper;
+import brand.dao.BrandMapper;
 import org.apache.dubbo.config.annotation.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service(interfaceClass = BrandApi.class)
 public class BrandApiImpl implements BrandApi {
 
+    @Autowired
+    private BrandIntroduceMapper brandIntroduceMapper;
 
+    @Autowired
+    private BrandMapper brandMapper;
+
+    @Transactional
     @Override
-    public int addBrand(Brand brand) {
-        System.out.println("addBrand ... ");
-        return 0;
+    public boolean addBrand(Brand brand) {
+        int i = brandMapper.addBrand(brand);
+        if (brand.getIntroduce() != null){
+            int k = brandIntroduceMapper.addBrandIntroduce(brand.getId(),brand.getIntroduce());
+            return i > 0 && k > 0;
+        }
+        return i > 0;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Brand findBrand(Integer id) {
-        System.out.println("findBrand ... ");
+        return brandMapper.findBrand(id);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Brand findBrandAndIntroduce(Integer id) {
+        Brand brand = brandMapper.findBrand(id);
+        BrandIntroduce brandIntroduce = brandIntroduceMapper.findBrandIntroduce(id);
+        if (brand != null){
+            brand.setIntroduce(brandIntroduce != null ? brandIntroduce.getIntroduce() : null);
+            return brand;
+        }
         return null;
     }
 
+    @Transactional
     @Override
-    public int updateBrand(Brand brand) {
-        System.out.println("updateBrand ... ");
-        return 0;
+    public boolean updateBrand(Brand brand) {
+        int i = brandMapper.updateBrand(brand);
+        if (brand.getIntroduce() != null){
+            int k = brandIntroduceMapper.updateBrandIntroduce(brand.getId(),brand.getIntroduce());
+            return i > 0 && k > 0;
+        }
+        return i > 0;
     }
 }
