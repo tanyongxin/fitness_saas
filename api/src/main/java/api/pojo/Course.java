@@ -1,7 +1,9 @@
 package api.pojo;
 
+import java.io.Serializable;
+
 // 课程和门店关联
-public class Course {
+public class Course implements Serializable {
 
     private Integer id; // 课程 id
     private Integer teacherId; // 课程老师的 id

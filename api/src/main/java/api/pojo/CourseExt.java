@@ -2,10 +2,12 @@ package api.pojo;
 
 import java.io.Serializable;
 
-public class BrandIntroduce implements Serializable {
-    private Integer id;
+// 课程的扩展 pojo
+public class CourseExt implements Serializable {
 
+    private Integer id;
     private String introduce;
+    private String other;
 
     public Integer getId() {
         return id;
@@ -20,6 +22,14 @@ public class BrandIntroduce implements Serializable {
     }
 
     public void setIntroduce(String introduce) {
-        this.introduce = introduce == null ? null : introduce.trim();
+        this.introduce = introduce;
+    }
+
+    public String getOther() {
+        return other;
+    }
+
+    public void setOther(String other) {
+        this.other = other;
     }
 }

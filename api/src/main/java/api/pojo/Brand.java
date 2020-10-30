@@ -3,8 +3,10 @@ package api.pojo;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
-public class Brand {
+// pojo 需要实现 Serializable 接口，否则使用 dubbo 调用提供者时会报错
+public class Brand implements Serializable {
 
     private Integer id;
     private Boolean isValid = true;
@@ -12,9 +14,9 @@ public class Brand {
     @NotNull
     @NotEmpty
     @NotBlank
-    private Integer name;
-    private String pic; // 品牌商标，多个照片用空格隔开
-    private String introduce; // 富文本中的内容
+    private String name;
+    private String pic = ""; // 品牌商标，多个照片用空格隔开
+    private String introduce ; // 富文本中的内容
 
 
     public Boolean getValid() {
@@ -41,11 +43,11 @@ public class Brand {
         this.id = id;
     }
 
-    public Integer getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(Integer name) {
+    public void setName(String name) {
         this.name = name;
     }
 

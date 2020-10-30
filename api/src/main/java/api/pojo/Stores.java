@@ -1,7 +1,9 @@
 package api.pojo;
 
+import java.io.Serializable;
+
 // 门店和品牌关联
-public class Stores {
+public class Stores implements Serializable {
 
     private Integer id; // 门店 id
     private Integer brandId; // 门店所属品牌的 id
