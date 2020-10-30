@@ -11,6 +11,8 @@
     <modules>
         <module>api</module>
         <module>brand_module</module>
+        <module>consumer_module</module>
+        <module>stores_course_module</module>
     </modules>
 
     <properties>
