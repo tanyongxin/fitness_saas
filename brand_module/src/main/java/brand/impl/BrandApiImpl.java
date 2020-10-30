@@ -1,10 +1,12 @@
 package brand.impl;
 
 import api.BrandApi;
+import api.StoresApi;
 import api.pojo.Brand;
 import api.pojo.BrandIntroduce;
 import brand.dao.BrandIntroduceMapper;
 import brand.dao.BrandMapper;
+import org.apache.dubbo.config.annotation.Reference;
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,15 +20,19 @@ public class BrandApiImpl implements BrandApi {
     @Autowired
     private BrandMapper brandMapper;
 
+    @Reference
+    private StoresApi storesApi;
+
     @Transactional
     @Override
     public boolean addBrand(Brand brand) {
         int i = brandMapper.addBrand(brand);
-        if (brand.getIntroduce() != null){
-            int k = brandIntroduceMapper.addBrandIntroduce(brand.getId(),brand.getIntroduce());
-            return i > 0 && k > 0;
-        }
-        return i > 0;
+        int k = 1;
+        if (brand.getIntroduce() != null)
+            k = brandIntroduceMapper.addBrandIntroduce(brand.getId(),brand.getIntroduce());
+        // 调用 storesApi 创建对应的门店表结构
+        storesApi.createStoresTable(brand.getId());
+        return i > 0 && k > 0;
     }
 
     @Transactional(readOnly = true)
