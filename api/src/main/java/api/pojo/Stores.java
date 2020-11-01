@@ -3,7 +3,7 @@ package api.pojo;
 import java.io.Serializable;
 
 // 门店和品牌关联
-public class Stores implements Serializable {
+public class Stores extends PageReq<Stores> implements Serializable {
 
     private Integer id; // 门店 id
     private Integer brandId; // 门店所属品牌的 id
@@ -16,7 +16,17 @@ public class Stores implements Serializable {
     private String storesName; // 门店名称
     private String other; // 门店的其他信息，如注意事项
     private boolean isOpen = true; // 是否营业
+    private Byte is_open;
 
+    public Byte getIs_open() {
+        return is_open;
+    }
+
+    public Stores setIs_open(Byte is_open) {
+        this.is_open = is_open;
+        setOpen(is_open != 0);
+        return this;
+    }
 
     public String getStoresName() {
         return storesName;

@@ -1,13 +1,17 @@
 package api;
 
+import api.pojo.PageReq;
 import api.pojo.Teacher;
+import java.util.List;
 
 public interface TeacherApi {
 
-    int addTeacher(Teacher teacher);
+    boolean addTeacher(Teacher teacher);
 
-    int updateTeacher(Teacher teacher);
+    boolean updateTeacher(Teacher teacher);
 
     Teacher findTeacherById(Integer id);
+
+    List<Teacher> findTeachersByBrandIdAndStoresId(PageReq<Teacher> pageReq);
 
 }

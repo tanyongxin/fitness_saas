@@ -2,24 +2,25 @@ package api;
 
 
 import api.pojo.Course;
+import api.pojo.PageReq;
 
 import java.util.List;
 
 public interface CourseApi {
 
-    int addCourse(Course course);
+    boolean addCourse(Integer brandId,Course course);
 
-    int delCourse(Integer id); // 表示课程结束
+    boolean delCourse(Integer brandId,Integer id); // 表示课程结束
 
-    Course findCourseById(Integer id);
+    Course findCourseById(Integer brandId,Integer id);
 
-    List<Course> findCourseByTeacherId(Integer teacherId,Integer lastId,Integer pageSize); // 根据老师 id 查询课表
+    List<Course> findCourseByTeacherId(Integer brandId, PageReq<Course> pageReq); // 根据老师 id 查询课表
 
-    List<Course> findCourseByTime(String startTime,String endTime,Integer lastId,Integer pageSize); // 根据时间查询课表
+    List<Course> findCourseByTime(Integer brandId,PageReq<Course> pageReq); // 根据时间查询课表
 
-    List<Course> findCourseByStoresId(Integer storesId,Integer lastId,Integer pageSize); // 根据门店 id 查询课表
+    List<Course> findCourseByStoresId(Integer brandId,PageReq<Course> pageReq); // 根据门店 id 查询课表
 
-    int updateCourse(Course course);
+    boolean updateCourse(Integer brandId,Course course);
 
     // 创建对应的课程表结构
     void createCourseTable(Integer brandId);
