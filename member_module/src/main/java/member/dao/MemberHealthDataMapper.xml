@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member.dao.MemberHealthDataMapper">
+  <resultMap id="BaseResultMap" type="api.pojo.MemberHealthData">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="memberId" jdbcType="INTEGER" property="memberId" />
+    <result column="height" jdbcType="REAL" property="height" />
+    <result column="weight" jdbcType="REAL" property="weight" />
+    <result column="bodyFat" jdbcType="REAL" property="bodyFat" />
+    <result column="targetWeight" jdbcType="REAL" property="targetWeight" />
+    <result column="targetBodyFat" jdbcType="REAL" property="targetBodyFat" />
+    <result column="addDate" jdbcType="INTEGER" property="addDate" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    id, memberId, height, weight, bodyFat, targetWeight, targetBodyFat, addDate
+  </sql>
+
+
+  <insert id="addMemberHealthData" parameterType="api.pojo.MemberHealthData">
+    insert into member_health_data
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="memberId != null">
+        memberId,
+      </if>
+      <if test="height != null">
+        height,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+      <if test="bodyFat != null">
+        bodyFat,
+      </if>
+      <if test="targetWeight != null">
+        targetWeight,
+      </if>
+      <if test="targetBodyFat != null">
+        targetBodyFat,
+      </if>
+      <if test="addDate != null">
+        addDate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="memberId != null">
+        #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="height != null">
+        #{height,jdbcType=REAL},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=REAL},
+      </if>
+      <if test="bodyFat != null">
+        #{bodyFat,jdbcType=REAL},
+      </if>
+      <if test="targetWeight != null">
+        #{targetWeight,jdbcType=REAL},
+      </if>
+      <if test="targetBodyFat != null">
+        #{targetBodyFat,jdbcType=REAL},
+      </if>
+      <if test="addDate != null">
+        UNIX_TIMESTAMP(#{addDate,jdbcType=INTEGER}),
+      </if>
+    </trim>
+  </insert>
+
+
+  <select id="selectMemberHealthDataById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, memberId, height, weight, bodyFat, targetWeight, targetBodyFat, FROM_UNIXTIME(addDate) as addDate
+    from member_health_data
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="findMemberHealthDataByTime" parameterType="map" resultMap="BaseResultMap">
+    select id, memberId, height, weight, bodyFat, targetWeight, targetBodyFat, addDate
+    from member_health_data
+    where id > #{lastId} and memberId = #{healthData.memberId} and addDate between UNIX_TIMESTAMP(#{healthData.addDate}) and UNIX_TIMESTAMP(#{healthData.endDate}) limit #{pageSize}
+  </select>
+
+  <select id="findMemberHealthDataByWeight" parameterType="map" resultMap="BaseResultMap">
+    select id, memberId, height, weight, bodyFat, targetWeight, targetBodyFat, addDate
+    from member_health_data
+    where id > #{lastId} and memberId = #{healthData.memberId} and weight >= #{healthData.weight} limit #{pageSize}
+  </select>
+
+  <select id="findMemberHealthDataByBodyFat" parameterType="map" resultMap="BaseResultMap">
+    select id, memberId, height, weight, bodyFat, targetWeight, targetBodyFat, addDate
+    from member_health_data
+    where id > #{lastId} and memberId = #{healthData.memberId} and bodyFat >= #{healthData.bodyFat} limit #{pageSize}
+  </select>
+
+  <select id="getMinId" resultType="int">
+    select min(id) from member_health_data where memberId = #{memberId}
+  </select>
+
+
+</mapper>
