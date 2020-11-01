@@ -11,14 +11,6 @@
     id,introduce,other
   </sql>
 
-  <select id="findCourseIntroduceAndOther" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from course_ext_${suffix}
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-
-
   <insert id="addCourseIntroduceAndOther" parameterType="map">
     insert into course_ext_${suffix}
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -56,6 +48,17 @@
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="findCourseIntroduceAndOther" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from course_ext_${suffix}
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <update id="createCourseExtTable" parameterType="int">
+      create table course_ext_${suffix} like course_ext
   </update>
 
 </mapper>

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="stores_course.dao.StoresMapper">
+  <resultMap id="BaseResultMap" type="api.pojo.Stores">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="brand_id" jdbcType="INTEGER" property="brandId" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="area" jdbcType="VARCHAR" property="area" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="business" jdbcType="VARCHAR" property="business" />
+    <result column="pic" jdbcType="VARCHAR" property="pic" />
+    <result column="stores_name" jdbcType="VARCHAR" property="storesName" />
+    <result column="is_open" jdbcType="BIT" property="isOpen" />
+  </resultMap>
+
+
+  <sql id="Base_Column_List">
+    id, brand_id, province, city, area, phone, business, pic, stores_name, is_open
+  </sql>
+
+  <select id="selectStoresById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from stores_${suffix}
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <insert id="insertStores" parameterType="map" useGeneratedKeys="true" keyColumn="id" keyProperty="stores.id">
+    insert into stores_${suffix}
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="stores.id != null">
+        id,
+      </if>
+      <if test="stores.brandId != null">
+        brand_id,
+      </if>
+      <if test="stores.province != null">
+        province,
+      </if>
+      <if test="stores.city != null">
+        city,
+      </if>
+      <if test="stores.area != null">
+        area,
+      </if>
+      <if test="stores.phone != null">
+        phone,
+      </if>
+      <if test="stores.business != null">
+        business,
+      </if>
+      <if test="stores.pic != null">
+        pic,
+      </if>
+      <if test="stores.storesName != null">
+        stores_name,
+      </if>
+      <if test="stores.isOpen != null">
+        is_open,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="stores.id != null">
+        #{stores.id,jdbcType=INTEGER},
+      </if>
+      <if test="stores.brandId != null">
+        #{stores.brandId,jdbcType=INTEGER},
+      </if>
+      <if test="stores.province != null">
+        #{stores.province,jdbcType=VARCHAR},
+      </if>
+      <if test="stores.city != null">
+        #{stores.city,jdbcType=VARCHAR},
+      </if>
+      <if test="stores.area != null">
+        #{stores.area,jdbcType=VARCHAR},
+      </if>
+      <if test="stores.phone != null">
+        #{stores.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="stores.business != null">
+        #{stores.business,jdbcType=VARCHAR},
+      </if>
+      <if test="stores.pic != null">
+        #{stores.pic,jdbcType=VARCHAR},
+      </if>
+      <if test="stores.storesName != null">
+        #{stores.storesName,jdbcType=VARCHAR},
+      </if>
+      <if test="stores.isOpen != null">
+        #{stores.isOpen,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateStores" parameterType="map">
+    update stores_${suffix}
+    <set>
+      <if test="stores.brandId != null">
+        brand_id = #{stores.brandId,jdbcType=INTEGER},
+      </if>
+      <if test="stores.province != null">
+        province = #{stores.province,jdbcType=VARCHAR},
+      </if>
+      <if test="stores.city != null">
+        city = #{stores.city,jdbcType=VARCHAR},
+      </if>
+      <if test="stores.area != null">
+        area = #{stores.area,jdbcType=VARCHAR},
+      </if>
+      <if test="stores.phone != null">
+        phone = #{stores.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="stores.business != null">
+        business = #{stores.business,jdbcType=VARCHAR},
+      </if>
+      <if test="stores.pic != null">
+        pic = #{stores.pic,jdbcType=VARCHAR},
+      </if>
+      <if test="stores.storesName != null">
+        stores_name = #{stores.storesName,jdbcType=VARCHAR},
+      </if>
+      <if test="stores.isOpen != null">
+        is_open = #{stores.isOpen,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{stores.id,jdbcType=INTEGER}
+  </update>
+
+  <delete id="delStores" parameterType="map">
+    update stores_${suffix} set is_open = 0 where id = #{id}
+  </delete>
+
+  <select id="findStoresByBrandId" parameterType="map" resultMap="BaseResultMap">
+    select id, brand_id, province, city, area, phone, business, pic, stores_name, is_open from  stores_${suffix}
+    where id > #{lastId} limit #{pageSize}
+  </select>
+
+  <update id="createStoresTable" parameterType="java.lang.Integer">
+        create table stores_${suffix} like stores
+  </update>
+
+  <select id="getMinId" parameterType="int" resultType="int">
+    select min(id) from  stores_${suffix}
+  </select>
+
+</mapper>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="stores_course.dao.TeacherMapper">
+  <resultMap id="BaseResultMap" type="api.pojo.Teacher">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="stores_id" jdbcType="INTEGER" property="storesId" />
+    <result column="sex" jdbcType="BIT" property="sex" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="pic" jdbcType="VARCHAR" property="pic" />
+    <result column="introduce" jdbcType="VARCHAR" property="introduce" />
+    <result column="brand_id" jdbcType="INTEGER" property="brandId" />
+    <result column="contact" jdbcType="VARCHAR" property="contact" />
+    <result column="goodAt" jdbcType="VARCHAR" property="goodAt" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, stores_id, sex, name, pic, introduce,brand_id,contact,goodAt
+  </sql>
+
+  <!--     id, stores_id, sex, name, pic, introduce,brand_id,contact,goodAt  -->
+  <insert id="addTeacher" parameterType="api.pojo.Teacher" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+    insert into teacher
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="storesId != null">
+        stores_id,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="pic != null">
+        pic,
+      </if>
+      <if test="introduce != null">
+        introduce,
+      </if>
+      <if test="brandId != null">
+        brand_id,
+      </if>
+      <if test="contact != null">
+        contact,
+      </if>
+      <if test="goodAt != null">
+        goodAt,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="storesId != null">
+        #{storesId,jdbcType=INTEGER},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=BIT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="pic != null">
+        #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="introduce != null">
+        #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="brandId != null">
+        #{brandId,jdbcType=INTEGER},
+      </if>
+      <if test="contact != null">
+        #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="goodAt != null">
+        #{goodAt,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateTeacher" parameterType="api.pojo.Teacher">
+    update teacher
+    <set>
+      <if test="storesId != null">
+        stores_id = #{storesId,jdbcType=INTEGER},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=BIT},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="pic != null">
+        pic = #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="introduce != null">
+        introduce = #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="brandId != null">
+        brand_id = #{brandId,jdbcType=INTEGER},
+      </if>
+      <if test="contact != null">
+        contact = #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="goodAt != null">
+        goodAt = #{goodAt,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+
+  <select id="findTeacherById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from teacher
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="findTeachersByBrandIdAndStoresId" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from teacher
+    where id > #{lastId} and brand_id = #{teacher.brandId} and stores_id = #{teacher.storesId} limit #{pageSize}
+  </select>
+
+  <select id="getMinId" parameterType="int" resultType="int">
+    select min(id) from  teacher
+  </select>
+
+</mapper>

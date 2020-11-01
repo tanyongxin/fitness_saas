@@ -11,46 +11,16 @@
     <result column="course_name" jdbcType="VARCHAR" property="courseName" />
     <result column="start_time" jdbcType="INTEGER" property="startTime" />
     <result column="end_time" jdbcType="INTEGER" property="endTime" />
+    <result column="number" jdbcType="INTEGER" property="number" />
+    <result column="price" jdbcType="INTEGER" property="price" />
+
   </resultMap>
 
   <sql id="Base_Column_List">
-     id,teacher_id,stores_id,classroom,pic,is_start,course_name,start_time,end_time
+     id,teacher_id,stores_id,classroom,pic,is_start,course_name,start_time,end_time,number,price
   </sql>
 
-  <select id="findCourseById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select
-    id,teacher_id,stores_id,classroom,pic,is_start,course_name,FROM_UNIXTIME(start_time) as startTime,FROM_UNIXTIME(end_time) as endTime
-    from course_${suffix}
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-
-  <select id="findCourseByTeacherId" parameterType="map" resultMap="BaseResultMap">
-    select
-    id,teacher_id,stores_id,classroom,pic,is_start,course_name,FROM_UNIXTIME(start_time) as startTime,FROM_UNIXTIME(end_time) as endTime
-    from course_${suffix}
-    where id > #{lastId} and stores_id = #{storesId} and teacher_id = #{teacherId,jdbcType=INTEGER} and is_start = #{isStart} limit #{pageSize}
-  </select>
-
-  <select id="findCourseByTime" parameterType="map" resultMap="BaseResultMap">
-    select
-    id,teacher_id,stores_id,classroom,pic,is_start,course_name,FROM_UNIXTIME(start_time) as startTime,FROM_UNIXTIME(end_time) as endTime
-    from course_${suffix}
-    where id > #{lastId} and stores_id = #{storesId} and start_time >= UNIX_TIMESTAMP(#{startTime}) and end_time <![CDATA[ <= ]]> UNIX_TIMESTAMP(#{endTime}) and is_start = 0 limit #{pageSize}
-  </select>
-
-  <select id="findCourseByStoresId" parameterType="map" resultMap="BaseResultMap">
-    select
-    id,teacher_id,stores_id,classroom,pic,is_start,course_name,FROM_UNIXTIME(start_time) as startTime,FROM_UNIXTIME(end_time) as endTime
-    from course_${suffix}
-    where id > #{lastId} and stores_id = #{storesId} and is_start = #{isStart} limit #{pageSize}
-  </select>
-
-  <delete id="delCourse" parameterType="map">
-      update course_${suffix} set is_start = 0 where id = #{id,jdbcType=INTEGER}
-  </delete>
-
-<!--     id,teacher_id,stores_id,classroom,pic,is_start,course_name,start_time,end_time -->
-  <insert id="addCourse" parameterType="map" keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+  <insert id="addCourse" parameterType="map" keyProperty="course.id" keyColumn="id" useGeneratedKeys="true">
     insert into course_${suffix}
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="course.id != null">
@@ -80,6 +50,13 @@
       <if test="course.endTime != null">
         end_time,
       </if>
+      <if test="course.number != null">
+        number,
+      </if>
+      <if test="course.price != null">
+        price,
+      </if>
+
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="course.id != null">
@@ -109,9 +86,47 @@
       <if test="course.endTime != null">
         UNIX_TIMESTAMP(#{course.endTime,jdbcType=INTEGER}),
       </if>
+      <if test="course.number != null">
+        #{course.number,jdbcType=INTEGER},
+      </if>
+      <if test="course.price != null">
+        #{course.price,jdbcType=INTEGER},
+      </if>
     </trim>
 
   </insert>
+
+  <delete id="delCourse" parameterType="map">
+      update course_${suffix} set is_start = 0 where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <select id="findCourseById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    id,teacher_id,stores_id,classroom,pic,is_start ,course_name,FROM_UNIXTIME(start_time) as start_time,FROM_UNIXTIME(end_time) as end_time,number,price
+    from course_${suffix}
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="findCourseByTeacherId" parameterType="map" resultMap="BaseResultMap">
+    select
+    id,teacher_id,stores_id,classroom,pic,is_start,course_name,FROM_UNIXTIME(start_time) as start_time,FROM_UNIXTIME(end_time) as end_time,number,price
+    from course_${suffix}
+    where id > #{lastId} and stores_id = #{course.storesId} and teacher_id = #{course.teacherId,jdbcType=INTEGER} and is_start = #{course.isStart} limit #{pageSize}
+  </select>
+
+  <select id="findCourseByTime" parameterType="map" resultMap="BaseResultMap">
+    select
+    id,teacher_id,stores_id,classroom,pic,is_start,course_name,FROM_UNIXTIME(start_time) as start_time,FROM_UNIXTIME(end_time) as end_time,number,price
+    from course_${suffix}
+    where id > #{lastId} and stores_id = #{course.storesId} and start_time <![CDATA[ <= ]]> UNIX_TIMESTAMP(#{course.startTime}) and end_time >= UNIX_TIMESTAMP(#{course.endTime}) and is_start = 0 limit #{pageSize}
+  </select>
+
+  <select id="findCourseByStoresId" parameterType="map" resultMap="BaseResultMap">
+    select
+    id,teacher_id,stores_id,classroom,pic,is_start,course_name,FROM_UNIXTIME(start_time) as start_time,FROM_UNIXTIME(end_time) as end_time,number,price
+    from course_${suffix}
+    where id > #{lastId} and stores_id = #{course.storesId} and is_start = #{course.isStart} limit #{pageSize}
+  </select>
 
   <update id="updateCourse" parameterType="map">
     update course_${suffix}
@@ -140,9 +155,23 @@
       <if test="course.endTime != null">
         end_time = UNIX_TIMESTAMP(#{course.endTime,jdbcType=INTEGER}),
       </if>
+      <if test="course.number != null">
+        number = #{course.number,jdbcType=INTEGER},
+      </if>
+      <if test="course.price != null">
+        price = #{course.price,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{course.id,jdbcType=INTEGER}
   </update>
+
+  <update id="createCourseTable" parameterType="int">
+        create table course_${suffix} like course
+  </update>
+
+  <select id="getMinId" parameterType="int" resultType="int">
+    select min(id) from  course_${suffix}
+  </select>
 
 
 </mapper>

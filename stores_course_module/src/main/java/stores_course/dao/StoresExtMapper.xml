@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="stores_course.dao.StoresExtMapper">
+  <resultMap id="BaseResultMap" type="api.pojo.StoresExt">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="other" jdbcType="VARCHAR" property="other" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, other
+  </sql>
+
+  <insert id="insertStoresExt" parameterType="map">
+    insert into stores_ext_${suffix}
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="other != null">
+        other,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="other != null">
+        #{other,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="selectStoresExtById" parameterType="map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from stores_ext_${suffix}
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <update id="updateStoresExtById" parameterType="map">
+    update stores_ext_${suffix}
+    <set>
+      <if test="other != null">
+        other = #{other,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="createStoresExtTable" parameterType="int">
+       create table stores_ext_${suffix} like stores_ext
+  </update>
+
+</mapper>
