@@ -13,6 +13,7 @@
         <module>brand_module</module>
         <module>consumer_module</module>
         <module>stores_course_module</module>
+        <module>member_module</module>
     </modules>
 
     <properties>
