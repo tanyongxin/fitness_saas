@@ -57,9 +57,11 @@ public class BrandApiImpl implements BrandApi {
     @Override
     public boolean updateBrand(Brand brand) {
         int i = brandMapper.updateBrand(brand);
-        if (brand.getIntroduce() != null){
-            int k = brandIntroduceMapper.updateBrandIntroduce(brand.getId(),brand.getIntroduce());
-            return i > 0 && k > 0;
+        if (i > 0 && brand.getIntroduce() != null){
+            BrandIntroduce brandIntroduce = brandIntroduceMapper.findBrandIntroduce(brand.getId());
+            if (brandIntroduce != null)
+                return brandIntroduceMapper.updateBrandIntroduce(brand.getId(), brand.getIntroduce()) > 0;
+            brandIntroduceMapper.addBrandIntroduce(brand.getId(),brand.getIntroduce());
         }
         return i > 0;
     }
