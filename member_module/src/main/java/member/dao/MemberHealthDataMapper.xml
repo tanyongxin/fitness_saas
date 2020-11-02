@@ -83,19 +83,19 @@
   <select id="findMemberHealthDataByTime" parameterType="map" resultMap="BaseResultMap">
     select id, memberId, height, weight, bodyFat, targetWeight, targetBodyFat, addDate
     from member_health_data
-    where id > #{lastId} and memberId = #{healthData.memberId} and addDate between UNIX_TIMESTAMP(#{healthData.addDate}) and UNIX_TIMESTAMP(#{healthData.endDate}) limit #{pageSize}
+    where id > #{lastId} and memberId = #{healthData.memberId} and addDate between UNIX_TIMESTAMP(#{healthData.addDate}) as addDate and UNIX_TIMESTAMP(#{healthData.endDate}) limit #{pageSize}
   </select>
 
   <select id="findMemberHealthDataByWeight" parameterType="map" resultMap="BaseResultMap">
-    select id, memberId, height, weight, bodyFat, targetWeight, targetBodyFat, addDate
+    select id, memberId, height, weight, bodyFat, targetWeight, targetBodyFat, UNIX_TIMESTAMP(addDate) as addDate
     from member_health_data
-    where id > #{lastId} and memberId = #{healthData.memberId} and weight >= #{healthData.weight} limit #{pageSize}
+    where id > #{lastId} and memberId = #{healthData.memberId} and weight <![CDATA[ <= ]]> #{healthData.weight} limit #{pageSize}
   </select>
 
   <select id="findMemberHealthDataByBodyFat" parameterType="map" resultMap="BaseResultMap">
-    select id, memberId, height, weight, bodyFat, targetWeight, targetBodyFat, addDate
+    select id, memberId, height, weight, bodyFat, targetWeight, targetBodyFat, UNIX_TIMESTAMP(addDate) as addDate
     from member_health_data
-    where id > #{lastId} and memberId = #{healthData.memberId} and bodyFat >= #{healthData.bodyFat} limit #{pageSize}
+    where id > #{lastId} and memberId = #{healthData.memberId} and bodyFat <![CDATA[ <= ]]> #{healthData.bodyFat} limit #{pageSize}
   </select>
 
   <select id="getMinId" resultType="int">

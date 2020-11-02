@@ -16,7 +16,6 @@ public interface MemberHealthDataMapper {
 
     List<MemberHealthData> findMemberHealthDataByWeight(@Param("lastId") Integer lastId,@Param("healthData") MemberHealthData healthData,@Param("pageSize")  Integer pageSize);
 
-
     List<MemberHealthData> findMemberHealthDataByBodyFat(@Param("lastId") Integer lastId,@Param("healthData") MemberHealthData healthData,@Param("pageSize")  Integer pageSize);
 
     Integer getMinId(Integer memberId);
