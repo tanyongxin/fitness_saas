@@ -1,20 +1,22 @@
 package api.pojo;
 
+import java.io.Serializable;
+
 // 会员健康数据
 public class MemberHealthData extends PageReq<MemberHealthData> {
 
     private Integer id;
     private Integer memberId;
-    private Float height; // 身高
-    private Float weight; // 体重
-    private Float bodyFat; // 体脂
+    private Float height; // 身高,整数部分最多两位，小数部分最多两位
+    private Float weight; // 体重，整数部分最多三位，小数部分最多两位
+    private Float bodyFat; // 体脂，整数部分最多两位，小数部分最多一位
     private Float targetWeight; // 目标体重
     private Float targetBodyFat; // 目标体脂
     private String addDate; // 添加该数据时的日期，最大值为 年-月-日 23:59，最小值为 年-月-日 00:00
     private String endDate; // 结束日期，不对应表中字段，只是用于封装查询条件
 
     // 会员健康数据的比较结果
-    public static class CompareRes{
+    public static class CompareRes implements Serializable {
 
         private Float weightRes; // 体重的比较结果
         private Float heightRes; // 身高的比较结果
@@ -56,6 +58,16 @@ public class MemberHealthData extends PageReq<MemberHealthData> {
         public CompareRes setBodyFatRes(Float bodyFatRes) {
             this.bodyFatRes = bodyFatRes;
             return this;
+        }
+
+        @Override
+        public String toString() {
+            return "CompareRes{" +
+                    "weightRes='" + weightRes + '\'' +
+                    ", heightRes='" + heightRes + '\'' +
+                    ", bodyFatRes='" + bodyFatRes + '\'' +
+                    ", isFinish=" + isFinish +
+                    '}';
         }
     }
 
