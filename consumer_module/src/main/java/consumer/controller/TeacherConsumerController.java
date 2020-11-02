@@ -6,8 +6,10 @@ import api.pojo.Res;
 import api.pojo.StateCode;
 import api.pojo.Teacher;
 import org.apache.dubbo.config.annotation.Reference;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -18,7 +20,7 @@ public class TeacherConsumerController {
 
     // 测试通过
     @RequestMapping(value = "/addTeacher",method = RequestMethod.POST)
-    public Res<Void> addTeacher(@RequestBody Teacher teacher){
+    public Res<Void> addTeacher(@RequestBody @Valid Teacher teacher, BindingResult bindingResult){
         return teacherApi.addTeacher(teacher) ? new Res<>(StateCode.OPERATION_SUCCEED) : new Res<>(StateCode.OPERATION_FAILURE);
     }
 

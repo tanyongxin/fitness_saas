@@ -7,8 +7,10 @@ import api.pojo.PageReq;
 import api.pojo.Res;
 import api.pojo.StateCode;
 import org.apache.dubbo.config.annotation.Reference;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -20,7 +22,7 @@ public class CourseConsumerController {
 
     // 测试通过
     @RequestMapping(value = "/addCourse/{brandId}",method = RequestMethod.POST)
-    public Res<Void> addCourse(@PathVariable("brandId")Integer brandId, @RequestBody Course course){
+    public Res<Void> addCourse(@PathVariable("brandId")Integer brandId, @RequestBody @Valid Course course, BindingResult bindingResult){
         System.out.println(course);
         return courseApi.addCourse(brandId, course) ? new Res<>(StateCode.OPERATION_SUCCEED) : new Res<>(StateCode.OPERATION_FAILURE);
     }

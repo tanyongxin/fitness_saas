@@ -5,7 +5,10 @@ import api.pojo.Brand;
 import api.pojo.Res;
 import api.pojo.StateCode;
 import org.apache.dubbo.config.annotation.Reference;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 public class BrandConsumerController {
@@ -15,7 +18,7 @@ public class BrandConsumerController {
 
     // 测试通过
     @RequestMapping(value = "/addBrand",method = RequestMethod.POST)
-    public Res<Void> addBrand(@RequestBody  Brand brand){
+    public Res<Void> addBrand(@RequestBody @Valid Brand brand, BindingResult bindingResult){
         boolean res = brandApi.addBrand(brand);
         return res ? new Res<>(StateCode.OPERATION_SUCCEED) : new Res<>(StateCode.OPERATION_FAILURE);
     }

@@ -5,8 +5,9 @@ import api.pojo.MemberHealthData;
 import api.pojo.Res;
 import api.pojo.StateCode;
 import org.apache.dubbo.config.annotation.Reference;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -17,7 +18,7 @@ public class MemberHealthDataConsumerController {
 
     // 测试通过
     @RequestMapping(value = "/addMemberHealthData/{memberId}",method = RequestMethod.POST)
-    public Res<Void> addMemberHealthData(@PathVariable("memberId") Integer memberId, @RequestBody MemberHealthData memberHealthData){
+    public Res<Void> addMemberHealthData(@PathVariable("memberId") Integer memberId, @RequestBody @Valid MemberHealthData memberHealthData, BindingResult bindingResult){
         return memberHealthDataApi.addMemberHealthData(memberHealthData) ? new Res<>(StateCode.OPERATION_SUCCEED) : new Res<>(StateCode.OPERATION_FAILURE);
     }
 
