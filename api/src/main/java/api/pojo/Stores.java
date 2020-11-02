@@ -1,18 +1,46 @@
 package api.pojo;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 // 门店和品牌关联
 public class Stores extends PageReq<Stores> implements Serializable {
 
-    private Integer id; // 门店 id
+     // 门店 id
+    @NotNull
     private Integer brandId; // 门店所属品牌的 id
+
+    @NotNull
+    @NotEmpty
+    @NotBlank
     private String province; // 所在省
+
+    @NotNull
+    @NotEmpty
+    @NotBlank
     private String city; // 所在市
+
+    @NotNull
+    @NotEmpty
+    @NotBlank
     private String area; // 所在区
+
+    @NotNull
+    @NotEmpty
+    @NotBlank
     private String phone; // 电话
+
+    @NotNull
+    @NotEmpty
+    @NotBlank
     private String business; // 营业时间，格式为: 10:00 - 23:00
-    private String pic; // 门店照片,多个照片用空格隔开
+    private String pic = ""; // 门店照片,多个照片用空格隔开
+
+    @NotNull
+    @NotEmpty
+    @NotBlank
     private String storesName; // 门店名称
     private String other; // 门店的其他信息，如注意事项
     private boolean isOpen = true; // 是否营业
@@ -50,14 +78,6 @@ public class Stores extends PageReq<Stores> implements Serializable {
 
     public void setBrandId(Integer brandId) {
         this.brandId = brandId;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getProvince() {

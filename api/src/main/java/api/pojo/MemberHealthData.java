@@ -1,18 +1,32 @@
 package api.pojo;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 // 会员健康数据
 public class MemberHealthData extends PageReq<MemberHealthData> {
 
-    private Integer id;
+    @NotNull
     private Integer memberId;
+
+    @NotNull
     private Float height; // 身高,整数部分最多两位，小数部分最多两位
+
+    @NotNull
     private Float weight; // 体重，整数部分最多三位，小数部分最多两位
+
+    @NotNull
     private Float bodyFat; // 体脂，整数部分最多两位，小数部分最多一位
+
+    @NotNull
     private Float targetWeight; // 目标体重
+
+    @NotNull
     private Float targetBodyFat; // 目标体脂
+
+    @NotNull
     private String addDate; // 添加该数据时的日期，最大值为 年-月-日 23:59，最小值为 年-月-日 00:00
+
     private String endDate; // 结束日期，不对应表中字段，只是用于封装查询条件
 
     // 会员健康数据的比较结果
@@ -87,15 +101,6 @@ public class MemberHealthData extends PageReq<MemberHealthData> {
 
     public MemberHealthData setAddDate(String addDate) {
         this.addDate = addDate;
-        return this;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public MemberHealthData setId(Integer id) {
-        this.id = id;
         return this;
     }
 

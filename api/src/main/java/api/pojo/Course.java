@@ -1,22 +1,47 @@
 package api.pojo;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 // 课程和门店关联
 public class Course extends PageReq<Course> implements Serializable {
 
-    private Integer id; // 课程 id
+    // 课程 id 在父类中
+    @NotNull
     private Integer teacherId; // 课程老师的 id
+
+    @NotNull
     private Integer storesId; // 门店 id，课程和门店关联
+    @NotNull
     private Integer number; // 课程人数
-    private Integer price; // 课程费用
+
+    private Integer price = 0; // 课程费用
+    @NotNull
+    @NotEmpty
+    @NotBlank
     private String classroom; // 课程上课地点，教室
-    private String pic; // 课程的相关的照片,多个照片用空格隔开
-    private Boolean isStart; // 课程是否开始，从数据库查询出来的字段为 start
+    private String pic = ""; // 课程的相关的照片,多个照片用空格隔开
+    private Boolean isStart = false; // 课程是否开始，从数据库查询出来的字段为 start
+
     private Byte is_start; // 不对应表字段，只是为了 springmvc 的封装
+
+    @NotNull
+    @NotEmpty
+    @NotBlank
     private String courseName; // 课程名称
+
+    @NotNull
+    @NotEmpty
+    @NotBlank
     private String startTime; // 课程开始时间，格式为 2020-10-29 14:37 ，数据库中存储为 int ，通过数据库函数 UNIX_TIMESTAMP 转换
+
+    @NotNull
+    @NotEmpty
+    @NotBlank
     private String endTime; // 课程结束时间
+
     private String introduce ; // 课程介绍
     private String other ; // 其他信息，包括注意事项等
 
@@ -65,15 +90,6 @@ public class Course extends PageReq<Course> implements Serializable {
 
     public Course setPrice(Integer price) {
         this.price = price;
-        return this;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public Course setId(Integer id) {
-        this.id = id;
         return this;
     }
 

@@ -1,17 +1,36 @@
 package api.pojo;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 // 课程教师表，教师和门店挂钩
 public class Teacher extends PageReq<Teacher> implements Serializable {
 
-    private Integer id;
+    @NotNull
     private Integer brandId; // 品牌 id
+
+    @NotNull
     private Integer storesId; // 门店 id
+
     private Boolean sex; // 性别，false 表示男，true 表示女
+
+    @NotNull
+    @NotEmpty
+    @NotBlank
     private String name;
+
+    @NotNull
+    @NotEmpty
+    @NotBlank
     private String contact; // 联系方式
+
+    @NotNull
+    @NotEmpty
+    @NotBlank
     private String goodAt; // 擅长的方面
+
     private String pic;
     private String introduce;
 
@@ -64,14 +83,6 @@ public class Teacher extends PageReq<Teacher> implements Serializable {
     public Teacher setSex(Boolean sex) {
         this.sex = sex;
         return this;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public Integer getStoresId() {

@@ -2,18 +2,9 @@ package api.pojo;
 
 import java.io.Serializable;
 
-public class BrandIntroduce implements Serializable {
-    private Integer id;
+public class BrandIntroduce extends PageReq<BrandIntroduce> implements Serializable {
 
     private String introduce;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getIntroduce() {
         return introduce;

@@ -1,12 +1,19 @@
 package api.pojo;
 
+import javax.validation.constraints.NotNull;
+
 // 预定课程 pojo
 public class ReserveCourse extends PageReq<ReserveCourse> {
 
-    private Integer id;
+    @NotNull
     private Integer memberId; // 会员 id
+
+    @NotNull
     private Integer courseId; // 课程 id
+
     private Integer number = 1; // 预定人数
+
+    @NotNull
     private String expectTime; // 预计到达时间,格式为 年-月-日 10:00
     private String otherMess; // 附加信息
 
@@ -20,15 +27,6 @@ public class ReserveCourse extends PageReq<ReserveCourse> {
 
     public ReserveCourse setNumber(Integer number) {
         this.number = number;
-        return this;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public ReserveCourse setId(Integer id) {
-        this.id = id;
         return this;
     }
 

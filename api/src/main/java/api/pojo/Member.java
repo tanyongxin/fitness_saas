@@ -1,6 +1,6 @@
 package api.pojo;
 
-public class Member {
+public class Member extends PageReq<Member> {
 
     private Integer id;
     private Integer brandId; // 品牌 id

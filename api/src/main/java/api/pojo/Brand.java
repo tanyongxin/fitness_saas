@@ -6,9 +6,8 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 // pojo 需要实现 Serializable 接口，否则使用 dubbo 调用提供者时会报错
-public class Brand implements Serializable {
+public class Brand extends PageReq<Brand> implements Serializable {
 
-    private Integer id;
     private Boolean isValid = true;
 
     @NotNull
@@ -33,14 +32,6 @@ public class Brand implements Serializable {
 
     public void setPic(String pic) {
         this.pic = pic;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getName() {

@@ -11,6 +11,17 @@ public class PageReq<T> implements Serializable {
 
     private Integer lastId;
 
+    protected Integer id;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public PageReq<T> setId(Integer id) {
+        this.id = id;
+        return this;
+    }
+
     public Integer getPageSize() {
         return PAGE_SIZE;
     }
