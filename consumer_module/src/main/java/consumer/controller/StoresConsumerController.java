@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 public class StoresConsumerController {
 
-    @Reference
+//    @Reference
     private StoresApi storesApi;
 
     // 测试通过

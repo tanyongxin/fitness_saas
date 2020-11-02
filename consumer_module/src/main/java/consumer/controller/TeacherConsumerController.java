@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 public class TeacherConsumerController {
 
-    @Reference
+//    @Reference
     private TeacherApi teacherApi;
 
     // 测试通过
