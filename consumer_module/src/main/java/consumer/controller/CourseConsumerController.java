@@ -3,7 +3,6 @@ package consumer.controller;
 
 import api.CourseApi;
 import api.pojo.Course;
-import api.pojo.PageReq;
 import api.pojo.Res;
 import api.pojo.StateCode;
 import org.apache.dubbo.config.annotation.Reference;
@@ -17,7 +16,7 @@ import java.util.List;
 public class CourseConsumerController {
 
 
-//    @Reference
+    @Reference
     private CourseApi courseApi;
 
     // 测试通过

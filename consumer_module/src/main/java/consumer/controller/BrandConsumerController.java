@@ -13,8 +13,9 @@ import javax.validation.Valid;
 @RestController
 public class BrandConsumerController {
 
-//    @Reference
+    @Reference(mock = "consumer.mock.BrandApiMock")
     BrandApi brandApi;
+
 
     // 测试通过
     @RequestMapping(value = "/addBrand",method = RequestMethod.POST)
