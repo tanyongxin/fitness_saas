@@ -49,4 +49,5 @@ public class Brand extends PageReq<Brand> implements Serializable {
     public void setIntroduce(String introduce) {
         this.introduce = introduce;
     }
+
 }
