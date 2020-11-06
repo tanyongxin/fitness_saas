@@ -20,7 +20,7 @@ public class BrandApiImpl implements BrandApi {
     @Autowired
     private BrandMapper brandMapper;
 
-    @Reference
+//    @Reference
     private StoresApi storesApi;
 
     @Transactional
