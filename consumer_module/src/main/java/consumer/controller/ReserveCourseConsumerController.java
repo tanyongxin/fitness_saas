@@ -15,7 +15,7 @@ import java.util.List;
 public class ReserveCourseConsumerController {
 
 
-    @Reference
+//    @Reference
     private ReserveCourseApi reserveCourseApi;
 
     // 测试通过

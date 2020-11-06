@@ -7,13 +7,12 @@ import api.pojo.StateCode;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 
 @RestController
 public class BrandConsumerController {
 
-    @Reference(mock = "consumer.mock.BrandApiMock")
+    @Reference
     BrandApi brandApi;
 
 
@@ -23,7 +22,6 @@ public class BrandConsumerController {
         boolean res = brandApi.addBrand(brand);
         return res ? new Res<>(StateCode.OPERATION_SUCCEED) : new Res<>(StateCode.OPERATION_FAILURE);
     }
-
 
     // 测试通过
     @RequestMapping(value = "/findBrand/{id}",method = RequestMethod.GET)

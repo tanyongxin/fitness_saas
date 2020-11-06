@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 public class MemberHealthDataConsumerController {
 
-    @Reference
+//    @Reference
     private MemberHealthDataApi memberHealthDataApi;
 
     // 测试通过
