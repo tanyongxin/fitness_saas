@@ -7,6 +7,7 @@ public class StateCode {
     public static final StateCode NOTLOGGEDIN = new StateCode(401,"请先登录再执行此项操作");
     public static final StateCode  TOKENEXPIRE = new StateCode(401,"登录已过期，请重新登录");
     public static final StateCode OPERATION_FAILURE = new StateCode(500,"操作失败");
+    public static final StateCode SERVICE_OFFLINE = new StateCode(500,"服务异常，稍后再试");
 
     private final int code;
     private final String describe;
