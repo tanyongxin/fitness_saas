@@ -5,13 +5,14 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="memberId" jdbcType="INTEGER" property="memberId" />
     <result column="courseId" jdbcType="INTEGER" property="courseId" />
+    <result column="brandId" jdbcType="INTEGER" property="brandId" />
     <result column="number" jdbcType="INTEGER" property="number" />
     <result column="expectTime" jdbcType="INTEGER" property="expectTime" />
     <result column="otherMess" jdbcType="VARCHAR" property="otherMess" />
   </resultMap>
   
   <sql id="Base_Column_List">
-    id, memberId, courseId,number,expectTime,otherMess
+    id, memberId, courseId,number,expectTime,otherMess,brandId
   </sql>
 
   <insert id="addReserveCourse" parameterType="api.pojo.ReserveCourse" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
@@ -35,6 +36,9 @@
       <if test="otherMess != null">
         otherMess,
       </if>
+      <if test="brandId != null">
+        brandId,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -55,7 +59,9 @@
       <if test="otherMess != null">
         #{otherMess,jdbcType=VARCHAR},
       </if>
-
+      <if test="brandId != null">
+        #{brandId,jdbcType=INTEGER},
+      </if>
     </trim>
   </insert>
 
@@ -71,23 +77,26 @@
       <if test="otherMess != null">
         otherMess = #{otherMess,jdbcType=VARCHAR},
       </if>
-
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
 
   <select id="findReserveCourseById" parameterType="int" resultMap="BaseResultMap">
-    select id, memberId, courseId,number,FROM_UNIXTIME(expectTime) as expectTime,otherMess
+    select id, memberId, courseId,number,FROM_UNIXTIME(expectTime) as expectTime,otherMess,brandId
     from reserve_course where id = #{id}
   </select>
 
   <select id="findReserveCourseByMemberId" parameterType="map" resultMap="BaseResultMap">
-    select id, memberId, courseId,number,FROM_UNIXTIME(expectTime) as expectTime,otherMess
+    select id, memberId, courseId,number,FROM_UNIXTIME(expectTime) as expectTime,otherMess,brandId
     from reserve_course where id > #{lastId} and memberId = #{course.memberId} limit #{pageSize}
   </select>
 
   <select id="getMinId" parameterType="int" resultType="int">
     select min(id) from reserve_course where memberId = #{memberId}
+  </select>
+
+  <select id="findReserveNumberByCourseId" parameterType="map" resultType="int">
+      select count(*) from  reserve_course where brandId = #{brandId} and courseId = #{courseId}
   </select>
 
 </mapper>

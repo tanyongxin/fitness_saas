@@ -18,4 +18,6 @@ public interface ReserveCourseMapper {
     List<ReserveCourse> findReserveCourseByMemberId(@Param("lastId") Integer lastId,@Param("course") ReserveCourse course,@Param("pageSize") Integer pageSize);
 
     Integer getMinId(Integer memberId);
+
+    int findReserveNumberByBrandIdAndCourseId(@Param("brandId") Integer brandId, @Param("courseId") Integer courseId);
 }
