@@ -2,9 +2,11 @@ package stores_course.impl;
 
 import api.AbstractApiImpl;
 import api.CourseApi;
+import api.ReserveCourseApi;
 import api.pojo.Course;
 import api.pojo.CourseExt;
 import api.pojo.PageReq;
+import org.apache.dubbo.config.annotation.Reference;
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +22,9 @@ public class CourseApiImpl extends AbstractApiImpl<Course> implements CourseApi 
 
     @Autowired
     private CourseExtMapper courseExtMapper;
+
+    @Reference
+    private ReserveCourseApi reserveCourseApi;
 
     @Transactional
     @Override
@@ -53,7 +58,9 @@ public class CourseApiImpl extends AbstractApiImpl<Course> implements CourseApi 
     public List<Course> findCourseByTeacherId(Integer brandId, PageReq<Course> pageReq) {
         Course course = pageReq.getT();
         pageReq = checkLastId(brandId,pageReq);
-        return courseMapper.findCourseByTeacherId(brandId,course,pageReq.getLastId(),pageReq.getPageSize());
+        List<Course> courses = courseMapper.findCourseByTeacherId(brandId, course, pageReq.getLastId(), pageReq.getPageSize());
+        courses.forEach(course1 -> course1.setBrandId(brandId));
+        return reserveCourseApi.findReserveNumberByCourseId(courses);
     }
 
     @Transactional(readOnly = true)
@@ -61,7 +68,9 @@ public class CourseApiImpl extends AbstractApiImpl<Course> implements CourseApi 
     public List<Course> findCourseByTime(Integer brandId,PageReq<Course> pageReq) {
         Course course = pageReq.getT();
         pageReq = checkLastId(brandId,pageReq);
-        return courseMapper.findCourseByTime(brandId,course,pageReq.getLastId(),pageReq.getPageSize());
+        List<Course> courses = courseMapper.findCourseByTime(brandId, course, pageReq.getLastId(), pageReq.getPageSize());
+        courses.forEach(course1 -> course1.setBrandId(brandId));
+        return reserveCourseApi.findReserveNumberByCourseId(courses);
     }
 
     @Transactional(readOnly = true)
@@ -69,7 +78,9 @@ public class CourseApiImpl extends AbstractApiImpl<Course> implements CourseApi 
     public List<Course> findCourseByStoresId(Integer brandId, PageReq<Course> pageReq) {
         Course course = pageReq.getT();
         pageReq = checkLastId(brandId,pageReq);
-        return courseMapper.findCourseByStoresId(brandId,course,pageReq.getLastId(),pageReq.getPageSize());
+        List<Course> courses = courseMapper.findCourseByStoresId(brandId, course, pageReq.getLastId(), pageReq.getPageSize());
+        courses.forEach(course1 -> course1.setBrandId(brandId));
+        return reserveCourseApi.findReserveNumberByCourseId(courses);
     }
 
     @Transactional

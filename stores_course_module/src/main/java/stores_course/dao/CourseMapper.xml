@@ -163,6 +163,9 @@
       </if>
     </set>
     where id = #{course.id,jdbcType=INTEGER}
+    <if test="course.number != null">
+      and number <![CDATA[ < ]]> #{course.number}
+    </if>
   </update>
 
   <update id="createCourseTable" parameterType="int">
