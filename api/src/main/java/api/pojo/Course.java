@@ -17,15 +17,19 @@ public class Course extends PageReq<Course> implements Serializable {
     @NotNull
     private Integer number; // 课程人数
 
+    private Integer reserveNumber; // 已预约人数
+    private Integer brandId; // 品牌 id
+
     private Integer price = 0; // 课程费用
     @NotNull
     @NotEmpty
     @NotBlank
     private String classroom; // 课程上课地点，教室
     private String pic = ""; // 课程的相关的照片,多个照片用空格隔开
-    private Boolean isStart = false; // 课程是否开始，从数据库查询出来的字段为 start
 
-    private Byte is_start; // 不对应表字段，只是为了 springmvc 的封装
+    private Byte isStart = 0; // 课程状态，从数据库查询出来的字段为 start，开始的标志为 1，结束的标志为 -1，未开始为 0
+
+    private Byte is_start; // 不对应表字段，只是为了 springmvc 的封装，开始的标志为 1，结束的标志为 -1，未开始为 0
 
     @NotNull
     @NotEmpty
@@ -46,13 +50,22 @@ public class Course extends PageReq<Course> implements Serializable {
     private String other ; // 其他信息，包括注意事项等
 
 
+    public Integer getBrandId() {
+        return brandId;
+    }
+
+    public Course setBrandId(Integer brandId) {
+        this.brandId = brandId;
+        return this;
+    }
+
     public Byte getIs_start() {
         return is_start;
     }
 
     public Course setIs_start(Byte is_start) {
         this.is_start = is_start;
-        setStart(is_start != 0);
+        setIsStart(is_start);
         return this;
     }
 
@@ -129,12 +142,21 @@ public class Course extends PageReq<Course> implements Serializable {
         return this;
     }
 
-    public Boolean getStart() {
+    public Byte getIsStart() {
         return isStart;
     }
 
-    public Course setStart(Boolean start) {
-        isStart = start;
+    public Course setIsStart(Byte isStart) {
+        this.isStart = isStart;
+        return this;
+    }
+
+    public Integer getReserveNumber() {
+        return reserveNumber;
+    }
+
+    public Course setReserveNumber(Integer reserveNumber) {
+        this.reserveNumber = reserveNumber;
         return this;
     }
 
