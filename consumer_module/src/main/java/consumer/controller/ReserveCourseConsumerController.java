@@ -15,13 +15,18 @@ import java.util.List;
 public class ReserveCourseConsumerController {
 
 
-//    @Reference
+    @Reference
     private ReserveCourseApi reserveCourseApi;
 
     // 测试通过
     @RequestMapping(value = "/addReserveCourse/{memberId}",method = RequestMethod.POST)
-    public Res<Void> addReserveCourse(@PathVariable("memberId") Integer memberId, @RequestBody @Valid ReserveCourse reserveCourse, BindingResult bindingResult){
-        return reserveCourseApi.addReserveCourse(reserveCourse) ? new Res<>(StateCode.OPERATION_SUCCEED) : new Res<>(StateCode.OPERATION_FAILURE);
+    public Res<ReserveCourse.ReserveRes> addReserveCourse(@PathVariable("memberId") Integer memberId, @RequestBody @Valid ReserveCourse reserveCourse, BindingResult bindingResult){
+        ReserveCourse.ReserveRes reserveRes = reserveCourseApi.addReserveCourse(reserveCourse);
+//        System.out.println("reserveRes : "  + reserveRes.getRes());
+//        if (reserveRes == ReserveCourse.ReserveRes.full){
+//            System.out.println("full ");
+//        }
+        return new Res<>(StateCode.OPERATION_SUCCEED,reserveRes) ;
     }
 
     // 测试通过

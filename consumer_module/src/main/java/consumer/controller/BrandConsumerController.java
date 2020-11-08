@@ -12,7 +12,7 @@ import javax.validation.Valid;
 @RestController
 public class BrandConsumerController {
 
-    @Reference
+//    @Reference
     BrandApi brandApi;
 
 
