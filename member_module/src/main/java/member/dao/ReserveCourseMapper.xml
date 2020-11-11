@@ -68,9 +68,9 @@
   <update id="updateReserveCourse" parameterType="api.pojo.ReserveCourse">
     update reserve_course
     <set>
-      <if test="number != null">
+      <!--<if test="number != null">
         number = #{number,jdbcType=INTEGER},
-      </if>
+      </if>-->
       <if test="expectTime != null">
         expectTime = UNIX_TIMESTAMP(#{expectTime,jdbcType=INTEGER}),
       </if>
