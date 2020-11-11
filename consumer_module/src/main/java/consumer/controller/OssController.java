@@ -1,5 +1,8 @@
 package consumer.controller;
 
+import api.pojo.oss.OssCallbackResult;
+import api.pojo.oss.OssPolicyResult;
+import consumer.service.OssService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,20 +33,20 @@ Error status : -1.OSS can not connect to your callbackUrl, please check it
 @Controller
 @RequestMapping("/aliyun/oss")
 public class OssController {
-//    @Autowired
-//    private OssService ossService;
-//
-//    @RequestMapping(value = "/policy", method = RequestMethod.GET)
-//    @ResponseBody
-//    public OssPolicyResult policy() {
-//        OssPolicyResult result = ossService.policy();
-//        return result;
-//    }
-//
-//    @RequestMapping(value = "/callback", method = RequestMethod.POST)
-//    @ResponseBody
-//    public OssCallbackResult callback(HttpServletRequest request) {
-//        OssCallbackResult ossCallbackResult = ossService.callback(request);
-//        return ossCallbackResult;
-//    }
+    @Autowired
+    private OssService ossService;
+
+    @RequestMapping(value = "/policy", method = RequestMethod.GET)
+    @ResponseBody
+    public OssPolicyResult policy() {
+        OssPolicyResult result = ossService.policy();
+        return result;
+    }
+
+    @RequestMapping(value = "/callback", method = RequestMethod.POST)
+    @ResponseBody
+    public OssCallbackResult callback(HttpServletRequest request) {
+        OssCallbackResult ossCallbackResult = ossService.callback(request);
+        return ossCallbackResult;
+    }
 }
